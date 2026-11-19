@@ -1,0 +1,5 @@
+# Добавить в /etc/caddy/Caddyfile, затем: sudo systemctl reload caddy
+hub.waree.uz {
+	encode gzip
+	reverse_proxy 127.0.0.1:3100
+}

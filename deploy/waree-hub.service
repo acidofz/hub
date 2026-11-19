@@ -1,0 +1,25 @@
+[Unit]
+Description=WAREE Hub — центр управления
+After=network.target
+
+[Service]
+Type=simple
+User=ubuntu
+WorkingDirectory=/opt/waree-hub
+Environment=NODE_ENV=production
+Environment=HUB_PORT=3100
+Environment=HUB_HOST=127.0.0.1
+Environment=HUB_DATA=/var/lib/waree-hub
+Environment=TZ=Asia/Tashkent
+ExecStart=/usr/bin/node src/server.js
+Restart=always
+RestartSec=3
+# ограничения
+NoNewPrivileges=true
+ProtectSystem=strict
+ProtectHome=true
+PrivateTmp=true
+ReadWritePaths=/var/lib/waree-hub
+
+[Install]
+WantedBy=multi-user.target

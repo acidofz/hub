@@ -1,0 +1,9 @@
+{
+  "name": "Центр управления WAREE",
+  "short_name": "Центр",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0d1015",
+  "theme_color": "#0d1015",
+  "icons": [{ "src": "/icon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any maskable" }]
+}

@@ -60,7 +60,8 @@ sync.put('/:app', express.json({ limit: '8mb' }), (req, res) => {
     if (prev && prev.data !== data) {
       // копия прошлой версии раз в 6 часов — история для отката
       const last = db.prepare('SELECT updated FROM sync_history WHERE app = ? ORDER BY updated DESC LIMIT 1').get(name);
-      if (!last || now - last.updated > 6 * 3600e3) {
+      // а также всегда, если новые данные заметно меньше старых (защита от затирания пустым телефоном)
+      if (!last || now - last.updated > 6 * 3600e3 || data.length < prev.data.length * 0.6) {
         db.prepare('INSERT INTO sync_history (app, data, updated) VALUES (?, ?, ?)').run(name, prev.data, prev.updated);
         db.prepare(`DELETE FROM sync_history WHERE app = ? AND id NOT IN
           (SELECT id FROM sync_history WHERE app = ? ORDER BY updated DESC LIMIT ?)`).run(name, name, HISTORY_KEEP);
